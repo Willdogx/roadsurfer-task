@@ -1,0 +1,37 @@
+name: roadsurfer-task
+
+services:
+  database:
+    image: mariadb
+    restart: always
+    environment:
+      - MARIADB_DATABASE=${DATABASE_NAME}
+      - MARIADB_USER=${DATABASE_USER}
+      - MARIADB_PASSWORD=${DATABASE_PASSWORD}
+      - MARIADB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+    volumes:
+      - ./database/data:/var/lib/mysql
+    ports:
+      - "127.0.0.1:3306:3306"
+
+  php-fpm:
+    build:
+      context: ./php-fpm
+    volumes:
+      - ${PROJECT_FOLDER}:/var/www
+    depends_on:
+      - database
+    ports:
+      - "127.0.0.1:9000:9000"
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ${PROJECT_FOLDER}:/var/www
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/sites/:/etc/nginx/sites-available
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - php-fpm
+    ports:
+      - "127.0.0.1:8080:80"

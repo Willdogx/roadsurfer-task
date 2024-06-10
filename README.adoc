@@ -1,0 +1,5 @@
+= Roadsurfer task
+
+== install
+
+rename `.env.dist` to `.env`. Run `docker compose up -d` and go to http://localhost:8080/
