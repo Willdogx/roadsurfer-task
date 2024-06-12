@@ -1,5 +1,5 @@
 FROM php:8.3-fpm-alpine
-# RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql
 ADD install-composer.sh /var/www
 WORKDIR /var/www
 RUN chmod u+x install-composer.sh
