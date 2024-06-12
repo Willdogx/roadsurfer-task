@@ -2,4 +2,6 @@
 
 == install
 
-rename `.env.dist` to `.env`. Run `docker compose up -d` and go to http://localhost:8080/
+run `docker compose up -d` to start the containers.
+
+Then `docker compose run -it php-fpm composer install` and afterwards `docker compose run -it php-fpm bin/console doctrine:migrations:migrate`. Then the site should be up and running in http://localhost:8080/
